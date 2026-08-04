@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin · Portfolio Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --ink: #0c0f0e; --ink-2: #12160f; --paper: #15190f;
+      --line: #2a3122; --line-bright: #3c4630;
+      --cream: #ece4d3; --cream-dim: #9aa090;
+      --brass: #c9974f; --brass-dim: #8a6f45;
+      --sage: #7fa085; --sage-dim: #4d6350;
+      --radius: 3px; --ease: cubic-bezier(.22,.61,.36,1);
+    }
+    body {
+      background: var(--ink);
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      padding: 2rem 1.5rem;
+    }
+    .wrap { max-width: 1180px; margin: 0 auto; }
+    .mono { font-family: 'IBM Plex Mono', monospace; }
+
+    .admin-header {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 1.2rem; margin-bottom: 2rem;
+    }
+    .admin-header h1 {
+      font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.8rem;
+    }
+    .admin-header .back-link {
+      color: var(--brass); text-decoration: none; font-size: .9rem;
+      border: 1px solid var(--line-bright); padding: .4rem 1.2rem; border-radius: 40px;
+      transition: all .2s;
+    }
+    .admin-header .back-link:hover { background: var(--line-bright); }
+
+    .toast {
+      background: var(--paper); border: 1px solid var(--line-bright);
+      padding: .8rem 1.4rem; border-radius: var(--radius);
+      margin-bottom: 1.5rem; display: none;
+      align-items: center; gap: .8rem; color: var(--cream);
+    }
+    .toast.show { display: flex; }
+    .toast i { color: var(--brass); font-size: 1.1rem; }
+
+    .form-card {
+      background: var(--paper); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 1.6rem;
+      margin-bottom: 2.2rem;
+    }
+    .form-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.8rem;
+    }
+    .form-group { display: flex; flex-direction: column; gap: .3rem; }
+    .form-group label {
+      font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--cream-dim);
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      background: var(--ink-2); border: 1px solid var(--line);
+      color: var(--cream); padding: .6rem .9rem;
+      border-radius: var(--radius); font-family: 'Inter', sans-serif;
+      font-size: .9rem; transition: border .2s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none; border-color: var(--brass-dim);
+    }
+    .form-group textarea { resize: vertical; min-height: 60px; }
+    .form-group .hint {
+      font-size: .7rem; color: var(--cream-dim); opacity: .7;
+    }
+    .form-actions {
+      grid-column: 1/-1; display: flex; gap: 1rem; margin-top: .6rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      background: transparent; border: 1px solid var(--line-bright);
+      color: var(--cream); padding: .6rem 1.8rem;
+      border-radius: 40px; font-family: 'Inter', sans-serif;
+      font-weight: 500; font-size: .85rem;
+      cursor: pointer; transition: all .25s;
+      display: inline-flex; align-items: center; gap: .6rem;
+    }
+    .btn-primary { background: var(--brass); border-color: var(--brass); color: var(--ink); }
+    .btn-primary:hover { background: var(--brass-dim); border-color: var(--brass-dim); }
+    .btn-outline:hover { background: var(--line-bright); }
+    .btn-danger { border-color: #8f5e5e; color: #d4a0a0; }
+    .btn-danger:hover { background: #3f2a2a; }
+
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); }
+    table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    th { text-align: left; padding: .9rem 1rem; background: var(--paper); color: var(--cream-dim); font-weight: 500; letter-spacing: .04em; border-bottom: 1px solid var(--line); }
+    td { padding: .8rem 1rem; border-bottom: 1px solid var(--line); vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    .table-badge {
+      display: inline-block; background: var(--line-bright); padding: .1rem .7rem; border-radius: 20px;
+      font-size: .7rem; font-family: 'IBM Plex Mono', monospace; color: var(--cream-dim);
+    }
+    .row-actions { display: flex; gap: .6rem; flex-wrap: wrap; }
+    .row-actions button {
+      background: transparent; border: 1px solid var(--line);
+      color: var(--cream-dim); padding: .2rem .9rem; border-radius: 20px;
+      cursor: pointer; font-size: .7rem; transition: all .2s;
+    }
+    .row-actions .edit-btn:hover { border-color: var(--brass); color: var(--brass); }
+    .row-actions .del-btn:hover { border-color: #8f5e5e; color: #d4a0a0; }
+    .empty-row td { text-align: center; padding: 2rem; color: var(--cream-dim); }
+    .loading { opacity: 0.6; pointer-events: none; }
+
+    @media (max-width: 680px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .admin-header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="admin-header">
+    <h1><i class="fas fa-pen-fancy" style="color:var(--brass);margin-right:.6rem;"></i>Portfolio Admin</h1>
+    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+  </header>
+
+  <div id="toast" class="toast"><i class="fas fa-circle-check"></i><span id="toastMsg">Project updated</span></div>
+
+  <div class="form-card">
+    <form id="projectForm">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="pTitle">Title *</label>
+          <input type="text" id="pTitle" placeholder="e.g. ODA School Portal" required />
+        </div>
+        <div class="form-group">
+          <label for="pSub">Subtitle</label>
+          <input type="text" id="pSub" placeholder="e.g. Student application" />
+        </div>
+        <div class="form-group">
+          <label for="pDesc">Description *</label>
+          <textarea id="pDesc" placeholder="Brief description..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="pTech">Tech stack (comma separated)</label>
+          <input type="text" id="pTech" placeholder="HTML, Firebase, Auth" />
+          <span class="hint">e.g. React, Node, MongoDB</span>
+        </div>
+        <div class="form-group">
+          <label for="pLive">Live URL</label>
+          <input type="url" id="pLive" placeholder="https://example.netlify.app" />
+        </div>
+        <div class="form-group">
+          <label for="pGithub">GitHub URL</label>
+          <input type="url" id="pGithub" placeholder="https://github.com/..." />
+        </div>
+        <div class="form-group">
+          <label for="pType">Category *</label>
+          <select id="pType" required>
+            <option value="hotel">Hotel & resort</option>
+            <option value="education">Education</option>
+            <option value="gov">Government</option>
+            <option value="portal">Portal</option>
+            <option value="all">All</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="pBadge">Badge / status</label>
+          <input type="text" id="pBadge" placeholder="production, premium, standard" value="standard" />
+        </div>
+        <div class="form-group" style="display:flex; flex-direction:row; align-items:center; gap:1rem;">
+          <label for="pPremium" style="text-transform:none; letter-spacing:0;">Premium</label>
+          <input type="checkbox" id="pPremium" style="width:20px; height:20px; accent-color:var(--brass);" />
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" id="submitBtn"><i class="fas fa-plus"></i> Add Project</button>
+          <button type="button" class="btn btn-outline" id="resetFormBtn"><i class="fas fa-undo"></i> Reset</button>
+          <input type="hidden" id="editId" value="" />
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div style="display:flex; justify-content:space-between; align-items:center; margin:1.8rem 0 .8rem;">
+    <h2 style="font-family:'Fraunces',serif; font-weight:400; font-size:1.2rem;">All Projects</h2>
+    <span style="color:var(--cream-dim); font-size:.8rem;" id="projectCount">0 items</span>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Title</th><th>Type</th><th>Live</th><th style="min-width:120px;">Actions</th></tr></thead>
+      <tbody id="projectTableBody">
+        <tr class="empty-row"><td colspan="4">Loading projects...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer style="margin-top:2.5rem; border-top:1px solid var(--line); padding-top:1.5rem; font-size:.8rem; color:var(--cream-dim);">
+    <i class="fas fa-database" style="margin-right:.4rem;"></i> Data stored in projects.json
+  </footer>
+</div>
+
+<script>
+const API_BASE = 'http://localhost:5000/api/projects';
+
+// DOM elements
+const form = document.getElementById('projectForm');
+const titleInp = document.getElementById('pTitle');
+const subInp = document.getElementById('pSub');
+const descInp = document.getElementById('pDesc');
+const techInp = document.getElementById('pTech');
+const liveInp = document.getElementById('pLive');
+const githubInp = document.getElementById('pGithub');
+const typeInp = document.getElementById('pType');
+const badgeInp = document.getElementById('pBadge');
+const premiumChk = document.getElementById('pPremium');
+const editIdInp = document.getElementById('editId');
+const submitBtn = document.getElementById('submitBtn');
+const resetBtn = document.getElementById('resetFormBtn');
+const tbody = document.getElementById('projectTableBody');
+const toast = document.getElementById('toast');
+const toastMsg = document.getElementById('toastMsg');
+const projectCount = document.getElementById('projectCount');
+
+// Toast notification
+function showToast(msg, isError = false) {
+  toastMsg.textContent = msg;
+  toast.style.display = 'flex';
+  toast.style.borderColor = isError ? '#8f5e5e' : 'var(--line-bright)';
+  toast.querySelector('i').style.color = isError ? '#d4a0a0' : 'var(--brass)';
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(() => { toast.style.display = 'none'; }, 3000);
+}
+
+// Reset form
+function resetForm() {
+  form.reset();
+  editIdInp.value = '';
+  submitBtn.innerHTML = '<i class="fas fa-plus"></i> Add Project';
+  premiumChk.checked = false;
+  typeInp.value = 'all';
+  badgeInp.value = 'standard';
+  document.querySelector('.form-card').style.borderColor = 'var(--line)';
+}
+
+// Fetch and render projects
+async function fetchProjects() {
+  try {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="4">Loading...</td></tr>';
+    const response = await fetch(API_BASE);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const projects = await response.json();
+    renderTable(projects);
+    return projects;
+  } catch (error) {
+    console.error('Fetch error:', error);
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="4">⚠️ Error loading projects. Make sure server is running on port 5000</td></tr>`;
+    showToast('Error: ' + error.message, true);
+    return [];
+  }
+}
+
+// Render table
+function renderTable(projects) {
+  if (!projects || projects.length === 0) {
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="4">No projects yet. Add one!</td></tr>`;
+    projectCount.textContent = '0 items';
+    return;
+  }
+
+  let html = '';
+  projects.forEach(p => {
+    const typeLabel = p.type && p.type.length ? p.type.join(', ') : '—';
+    const liveLink = p.live ? 
+      `<a href="${p.live}" target="_blank" style="color:var(--brass);text-decoration:none;font-size:.8rem;"><i class="fas fa-external-link-alt"></i></a>` : 
+      '—';
+    
+    html += `<tr>
+      <td>
+        <strong style="font-weight:500;">${p.title || 'untitled'}</strong>
+        <br/><span style="font-size:.7rem;color:var(--cream-dim);">${p.subtitle || ''}</span>
+      </td>
+      <td><span class="table-badge">${typeLabel}</span></td>
+      <td>${liveLink}</td>
+      <td class="row-actions">
+        <button class="edit-btn" data-id="${p.id}"><i class="fas fa-pen"></i> Edit</button>
+        <button class="del-btn" data-id="${p.id}"><i class="fas fa-trash-can"></i> Del</button>
+      </td>
+    </tr>`;
+  });
+  
+  tbody.innerHTML = html;
+  projectCount.textContent = projects.length + ' items';
+
+  // Attach event listeners
+  tbody.querySelectorAll('.edit-btn').forEach(btn => {
+    btn.addEventListener('click', () => loadProjectForEdit(parseInt(btn.dataset.id)));
+  });
+  
+  tbody.querySelectorAll('.del-btn').forEach(btn => {
+    btn.addEventListener('click', () => deleteProject(parseInt(btn.dataset.id)));
+  });
+}
+
+// Load project for editing
+async function loadProjectForEdit(id) {
+  try {
+    const response = await fetch(`${API_BASE}/${id}`);
+    if (!response.ok) throw new Error('Project not found');
+    
+    const p = await response.json();
+    
+    titleInp.value = p.title || '';
+    subInp.value = p.subtitle || '';
+    descInp.value = p.desc || '';
+    techInp.value = (p.tech || []).join(', ');
+    liveInp.value = p.live || '';
+    githubInp.value = p.github || '';
+    typeInp.value = (p.type && p.type.length) ? p.type[0] : 'all';
+    badgeInp.value = p.badge || 'standard';
+    premiumChk.checked = !!p.premium;
+    editIdInp.value = p.id;
+    
+    submitBtn.innerHTML = '<i class="fas fa-pen"></i> Update Project';
+    document.querySelector('.form-card').style.borderColor = 'var(--brass)';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    showToast('Editing: ' + p.title);
+  } catch (error) {
+    showToast('Error loading project: ' + error.message, true);
+  }
+}
+
+// Delete project
+async function deleteProject(id) {
+  if (!confirm(`Delete project #${id}?`)) return;
+  
+  try {
+    const response = await fetch(`${API_BASE}/${id}`, { method: 'DELETE' });
+    if (!response.ok) throw new Error('Delete failed');
+    
+    showToast('Project deleted successfully');
+    if (parseInt(editIdInp.value) === id) resetForm();
+    await fetchProjects();
+  } catch (error) {
+    showToast('Error deleting: ' + error.message, true);
+  }
+}
+
+// Submit form (Add/Update)
+async function submitProject(e) {
+  e.preventDefault();
+  
+  const title = titleInp.value.trim();
+  const desc = descInp.value.trim();
+  
+  if (!title || !desc) {
+    showToast('Title and description are required', true);
+    return;
+  }
+
+  const payload = {
+    title,
+    subtitle: subInp.value.trim(),
+    desc,
+    tech: techInp.value.split(',').map(s => s.trim()).filter(Boolean),
+    live: liveInp.value.trim(),
+    github: githubInp.value.trim(),
+    type: [typeInp.value],
+    badge: badgeInp.value.trim() || 'standard',
+    premium: premiumChk.checked
+  };
+
+  const editId = editIdInp.value;
+  const method = editId ? 'PUT' : 'POST';
+  const url = editId ? `${API_BASE}/${editId}` : API_BASE;
+
+  try {
+    const response = await fetch(url, {
+      method: method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Operation failed');
+    }
+
+    showToast(editId ? 'Project updated ✅' : 'Project added ✅');
+    resetForm();
+    await fetchProjects();
+  } catch (error) {
+    showToast('Error: ' + error.message, true);
+  }
+}
+
+// Event listeners
+resetBtn.addEventListener('click', resetForm);
+form.addEventListener('submit', submitProject);
+
+// Initial load
+fetchProjects();
+
+console.log('🚀 Admin panel ready!');
+console.log(`📡 Connected to API: ${API_BASE}`);
+</script>
+</body>
+</html>

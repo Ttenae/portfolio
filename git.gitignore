@@ -1,0 +1,4 @@
+node_modules/
+projects.json
+package-lock.json
+.DS_Store

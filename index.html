@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tesfaye Tilahun · Systems Engineer</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  :root{
+    --ink:        #0c0f0e;
+    --ink-2:      #12160f;
+    --paper:      #15190f;   
+    --line:       #2a3122;
+    --line-bright:#3c4630;
+    --cream:      #ece4d3;
+    --cream-dim:  #9aa090;
+    --brass:      #c9974f;
+    --brass-dim:  #8a6f45;
+    --sage:       #7fa085;
+    --sage-dim:   #4d6350;
+    --radius:     3px;
+    --ease: cubic-bezier(.22,.61,.36,1);
+  }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:
+      radial-gradient(ellipse 1200px 600px at 15% -10%, rgba(201,151,79,.06), transparent 60%),
+      radial-gradient(ellipse 900px 500px at 100% 0%, rgba(127,160,133,.05), transparent 60%),
+      var(--ink);
+    color:var(--cream);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+  }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:2.5rem 1.5rem 4rem; }
+
+  .mono{ font-family:'IBM Plex Mono',monospace; }
+
+  a{ color:inherit; }
+
+  
+  .letterhead{
+    display:flex; align-items:center; justify-content:space-between; gap:1.5rem;
+    flex-wrap:wrap;
+    padding-bottom:1.4rem;
+    border-bottom:1px solid var(--line);
+    margin-bottom:3rem;
+  }
+
+  .seal-block{ display:flex; align-items:center; gap:1rem; }
+
+  .seal{
+    width:52px; height:52px; border-radius:50%;
+    border:1.5px solid var(--brass);
+    display:flex; align-items:center; justify-content:center;
+    position:relative; flex-shrink:0;
+  }
+  .seal::before{
+    content:''; position:absolute; inset:4px; border-radius:50%;
+    border:1px dashed var(--brass-dim);
+  }
+  .seal span{
+    font-family:'Fraunces',serif; font-weight:600; font-size:1rem; color:var(--brass);
+  }
+
+  .name-block h1{
+    font-family:'Fraunces',serif; font-weight:600; font-size:1.35rem; letter-spacing:.01em;
+  }
+  .name-block .role{
+    font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--cream-dim); margin-top:.15rem;
+  }
+
+  .status-tag{
+    display:flex; align-items:center; gap:.6rem;
+    padding:.5rem 1rem;
+    border:1px solid var(--line-bright);
+    border-radius:40px;
+  }
+  .status-dot{
+    width:7px; height:7px; border-radius:50%; background:var(--sage);
+    box-shadow:0 0 8px var(--sage);
+    animation:blink 2.4s infinite ease-in-out;
+  }
+  @keyframes blink{ 0%,100%{opacity:.5} 50%{opacity:1} }
+  .status-tag .txt{
+    font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--cream-dim);
+  }
+
+  /* ============ HERO ============ */
+  .hero{ margin-bottom:3rem; }
+  .hero .eyebrow{
+    font-size:.72rem; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--brass); margin-bottom:1.1rem; display:flex; align-items:center; gap:.6rem;
+  }
+  .hero .eyebrow::before{
+    content:''; width:22px; height:1px; background:var(--brass);
+  }
+
+  .hero h2{
+    font-family:'Fraunces',serif; font-weight:500;
+    font-size:clamp(2.1rem, 4.6vw, 3.4rem);
+    line-height:1.14; letter-spacing:-.01em;
+    max-width:820px; margin-bottom:1.3rem;
+  }
+  .hero h2 em{
+    font-style:italic; color:var(--brass); font-weight:400;
+  }
+
+  .hero p{
+    color:var(--cream-dim); max-width:560px; font-size:1.02rem; margin-bottom:2.2rem;
+  }
+
+  
+  .ledger{
+    display:flex; flex-wrap:wrap;
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .ledger .cell{
+    flex:1 1 150px;
+    padding:1rem 1.4rem;
+    border-right:1px solid var(--line);
+  }
+  .ledger .cell:last-child{ border-right:none; }
+  .ledger .cell .val{
+    font-family:'Fraunces',serif; font-size:1.5rem; font-weight:500; color:var(--cream);
+  }
+  .ledger .cell .lab{
+    font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:var(--cream-dim);
+    margin-top:.25rem;
+  }
+
+
+  .filter-bar{
+    display:flex; flex-wrap:wrap; gap:0 1.8rem;
+    margin:3rem 0 2.4rem;
+  }
+  .filter-btn{
+    background:none; border:none; cursor:pointer;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.74rem; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--cream-dim);
+    padding:.6rem 0; position:relative;
+    transition:color .25s var(--ease);
+  }
+  .filter-btn::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:2px;
+    background:var(--brass); transform:scaleX(0); transform-origin:left;
+    transition:transform .3s var(--ease);
+  }
+  .filter-btn:hover{ color:var(--cream); }
+  .filter-btn.active{ color:var(--brass); }
+  .filter-btn.active::after{ transform:scaleX(1); }
+
+
+  .project-grid{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+    gap:1.6rem;
+    min-height:200px;
+  }
+
+  .card{
+    background:linear-gradient(180deg, var(--paper), var(--ink-2));
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:1.6rem 1.6rem 1.4rem;
+    display:flex; flex-direction:column;
+    position:relative;
+    opacity:0; transform:translateY(16px);
+    animation:rise .55s var(--ease) forwards;
+    transition:border-color .3s var(--ease), transform .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .card:hover{
+    border-color:var(--brass-dim);
+    transform:translateY(-4px);
+    box-shadow:0 20px 40px -22px rgba(0,0,0,.7);
+  }
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+
+  .card-top{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    margin-bottom:1.1rem;
+  }
+  .file-no{
+    font-family:'IBM Plex Mono',monospace; font-size:.68rem; letter-spacing:.08em;
+    color:var(--cream-dim);
+  }
+  .status-chip{
+    display:flex; align-items:center; gap:.45rem;
+    font-family:'IBM Plex Mono',monospace; font-size:.62rem; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--cream-dim);
+  }
+  .status-chip .dot{ width:6px; height:6px; border-radius:50%; }
+  .status-chip .dot.gold{ background:var(--brass); box-shadow:0 0 6px var(--brass); }
+  .status-chip .dot.sage{ background:var(--sage); box-shadow:0 0 6px var(--sage); }
+
+  .card h3{
+    font-family:'Fraunces',serif; font-weight:500; font-size:1.32rem; margin-bottom:.25rem;
+  }
+  .card .sub{
+    font-style:italic; color:var(--cream-dim); font-size:.86rem; margin-bottom:.9rem;
+  }
+  .card p{
+    color:var(--cream-dim); font-size:.9rem; margin-bottom:1.3rem; flex:1;
+  }
+
+  .tech-stack{ display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:1.4rem; }
+  .tech-tag{
+    font-family:'IBM Plex Mono',monospace; font-size:.66rem;
+    color:var(--cream-dim);
+    border:1px solid var(--line-bright);
+    padding:.2rem .6rem; border-radius:20px;
+  }
+
+  .card-links{
+    display:flex; gap:1.3rem; align-items:center;
+    border-top:1px solid var(--line); padding-top:1rem; margin-top:auto;
+  }
+  .card-links a{
+    font-size:.82rem; font-weight:500; text-decoration:none;
+    display:inline-flex; align-items:center; gap:6px;
+    transition:color .25s var(--ease);
+  }
+  .card-links a.primary{ color:var(--brass); }
+  .card-links a:not(.primary){ color:var(--cream-dim); }
+  .card-links a:hover{ color:var(--cream); }
+
+  /* premium corner mark */
+  .card.is-premium::after{
+    content:'CERT.';
+    position:absolute; top:0; right:0;
+    font-family:'IBM Plex Mono',monospace; font-size:.58rem; letter-spacing:.1em;
+    color:var(--ink);
+    background:var(--brass);
+    padding:.28rem .6rem;
+    border-bottom-left-radius:6px;
+  }
+
+  .loading-projects{
+    grid-column:1/-1;
+    text-align:center;
+    padding:3rem;
+    color:var(--cream-dim);
+  }
+  .loading-projects .spinner{
+    display:inline-block;
+    width:30px;
+    height:30px;
+    border:2px solid var(--line);
+    border-top:2px solid var(--brass);
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+    margin-bottom:1rem;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  .footer{
+    margin-top:4.5rem; padding-top:1.6rem;
+    border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;
+  }
+  .footer .fine{
+    font-size:.78rem; color:var(--cream-dim);
+  }
+  .footer .fine strong{ color:var(--cream); font-weight:500; }
+  .footer-socials{ display:flex; gap:1.1rem; }
+  .footer-socials a{
+    width:34px; height:34px; border:1px solid var(--line-bright); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--cream-dim); font-size:.85rem;
+    transition:all .25s var(--ease);
+  }
+  .footer-socials a:hover{ color:var(--brass); border-color:var(--brass-dim); transform:translateY(-2px); }
+
+  @media (max-width:700px){
+    .wrap{ padding:1.6rem 1.1rem 3rem; }
+    .letterhead{ flex-direction:column; align-items:flex-start; gap:1rem; }
+    .ledger .cell{ flex:1 1 45%; }
+    .filter-bar{ gap:0 1.1rem; }
+    .footer{ flex-direction:column; align-items:flex-start; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="letterhead">
+    <div class="seal-block">
+      <div class="seal"><span>TT</span></div>
+      <div class="name-block">
+        <h1>Tesfaye Tilahun</h1>
+        <div class="role">Full-Stack Systems Engineer</div>
+      </div>
+    </div>
+    <div class="status-tag">
+      <span class="status-dot"></span>
+      <span class="txt">Open for commissions</span>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">Based in Addis Abeba, Ethiopia</div>
+    <h2>Systems of record for institutions that <em>can't afford</em> downtime.</h2>
+    <p>
+      I build the schools, hotels, and government offices software actually run on
+      booking engines, verification portals, and secure dashboards, shipped and
+      maintained in production.
+    </p>
+
+    <div class="ledger">
+      <div class="cell">
+        <div class="val" id="totalProjects">0</div>
+        <div class="lab">Systems shipped</div>
+      </div>
+      <div class="cell">
+        <div class="val" id="totalSectors">0</div>
+        <div class="lab">Sectors served</div>
+      </div>
+      <div class="cell">
+        <div class="val mono" style="font-size:1.1rem; letter-spacing:.02em;">Gov · Edu · Hospitality</div>
+        <div class="lab">Domains</div>
+      </div>
+      <div class="cell">
+        <div class="val mono" style="font-size:1.1rem;">Firebase / React</div>
+        <div class="lab">Core stack</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" data-filter="all">All files</button>
+    <button class="filter-btn" data-filter="hotel">Hotel & resort</button>
+    <button class="filter-btn" data-filter="education">Education</button>
+    <button class="filter-btn" data-filter="gov">Government</button>
+    <button class="filter-btn" data-filter="portal">Portal</button>
+  </div>
+
+  <div class="project-grid" id="projectGrid">
+    <div class="loading-projects">
+      <div class="spinner"></div>
+      <div>Loading projects...</div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="fine"><strong>Tesfaye Tilahun</strong> web foundation practice, est. Addis Abeba © 2026</div>
+    <div class="footer-socials">
+      <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://t.me/wfcnfc" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+      <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+const API_BASE = 'http://localhost:5000/api/projects';
+
+const grid = document.getElementById('projectGrid');
+const filterBtns = document.querySelectorAll('.filter-btn');
+const totalProjectsEl = document.getElementById('totalProjects');
+const totalSectorsEl = document.getElementById('totalSectors');
+
+let allProjects = [];
+
+// Fetch projects from API
+async function fetchProjects() {
+  try {
+    const response = await fetch(API_BASE);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const projects = await response.json();
+    allProjects = projects;
+    updateStats(projects);
+    return projects;
+  } catch (error) {
+    console.error('Error fetching projects:', error);
+    grid.innerHTML = `
+      <div class="loading-projects" style="grid-column:1/-1;">
+        <div style="font-size:2rem; margin-bottom:1rem;">⚠️</div>
+        <div>Could not load projects. Make sure the server is running.</div>
+        <div style="font-size:0.8rem; color:var(--cream-dim); margin-top:0.5rem;">
+          Run <code style="background:var(--line);padding:0.2rem 0.6rem;border-radius:3px;">node server.js</code> to start the backend.
+        </div>
+      </div>
+    `;
+    return [];
+  }
+}
+
+// Update statistics
+function updateStats(projects) {
+  // Total projects
+  totalProjectsEl.textContent = projects.length;
+  
+  // Count unique sectors
+  const sectors = new Set();
+  projects.forEach(p => {
+    if (p.type && p.type.length) {
+      p.type.forEach(t => sectors.add(t));
+    }
+  });
+  totalSectorsEl.textContent = sectors.size;
+}
+
+// Render projects with filter
+function renderProjects(filter = 'all') {
+  const filtered = filter === 'all' 
+    ? allProjects 
+    : allProjects.filter(p => p.type && p.type.includes(filter));
+
+  if (!filtered.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem; color:var(--cream-dim);">
+      <div class="mono" style="font-size:.75rem; letter-spacing:.1em; text-transform:uppercase;">No files match this filter</div>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map((p, index) => `
+    <div class="card ${p.premium ? 'is-premium' : ''}" style="animation-delay:${(index % 10) * 0.05}s">
+      <div class="card-top">
+        <span class="file-no">FILE №${p.file || String(p.id).padStart(3, '0')}</span>
+        <span class="status-chip">
+          <span class="dot ${p.premium ? 'gold' : 'sage'}"></span>
+          ${p.badge || 'standard'}
+        </span>
+      </div>
+      <h3>${p.title || 'Untitled'}</h3>
+      <div class="sub">${p.subtitle || ''}</div>
+      <p>${p.desc || ''}</p>
+      <div class="tech-stack">
+        ${(p.tech || []).map(t => `<span class="tech-tag">${t}</span>`).join('')}
+      </div>
+      <div class="card-links">
+        ${p.live ? `<a href="${p.live}" target="_blank" rel="noopener" class="primary"><i class="fas fa-arrow-up-right-from-square"></i>&nbsp;View live</a>` : ''}
+        ${p.github && p.github !== '#' ? `<a href="${p.github}" target="_blank" rel="noopener"><i class="fab fa-github"></i>&nbsp;Source</a>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+// Filter button click handlers
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', function() {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    renderProjects(this.dataset.filter);
+  });
+});
+
+// Auto-refresh every 30 seconds to check for updates
+let refreshInterval;
+
+function startAutoRefresh() {
+  if (refreshInterval) clearInterval(refreshInterval);
+  refreshInterval = setInterval(async () => {
+    const currentFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
+    await fetchProjects();
+    renderProjects(currentFilter);
+  }, 30000);
+}
+
+// Initialize
+async function init() {
+  await fetchProjects();
+  renderProjects('all');
+  startAutoRefresh();
+}
+
+init();
+
+console.log('🚀 Portfolio loaded!');
+console.log('📡 Connected to API:', API_BASE);
+console.log('🔄 Auto-refresh every 30 seconds');
+</script>
+
+</body>
+</html>

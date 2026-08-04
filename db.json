@@ -1,0 +1,164 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "file": "001",
+      "title": "ODA School Portal",
+      "subtitle": "Student application & verification",
+      "desc": "Registration system with email verification, role-based access, and Firebase integration in daily use at ODA Special Boarding School.",
+      "badge": "production",
+      "type": [
+        "education",
+        "portal"
+      ],
+      "tech": [
+        "HTML/CSS",
+        "Firebase Auth",
+        "Firestore",
+        "EmailJS"
+      ],
+      "live": "https://odaregistration.netlify.app/",
+      "github": "#",
+      "premium": true
+    },
+    {
+      "id": 2,
+      "file": "002",
+      "title": "Fuel Control System",
+      "subtitle": "Anti-corruption fleet monitor",
+      "desc": "Fuel distribution dashboard with real-time tracking, AES-256 encryption, and live analytics built for Ethiopian government use.",
+      "badge": "secure · advanced",
+      "type": [
+        "gov",
+        "portal"
+      ],
+      "tech": [
+        "Chart.js",
+        "Firebase",
+        "EmailJS",
+        "html2pdf"
+      ],
+      "live": "https://fuelcontrolsystem.netlify.app/",
+      "github": "#",
+      "premium": true
+    },
+    {
+      "id": 3,
+      "file": "003",
+      "title": "Rosemary Hotel",
+      "subtitle": "Booking engine + admin dashboard",
+      "desc": "Full hospitality system: a guest booking engine paired with a staff admin panel for revenue, booking trends, and room popularity insight.",
+      "badge": "premium system",
+      "type": [
+        "hotel",
+        "portal"
+      ],
+      "tech": [
+        "HTML/CSS",
+        "Firebase",
+        "Analytics",
+        "Dashboard"
+      ],
+      "live": "https://rosemaryhotel.netlify.app/",
+      "github": "#",
+      "premium": true
+    },
+    {
+      "id": 4,
+      "file": "004",
+      "title": "Visit Ethiopia",
+      "subtitle": "Tourism & culture showcase",
+      "desc": "Travel guide highlighting Ethiopia's heritage, UNESCO sites, and natural wonders built for inspiration and trip planning.",
+      "badge": "standard",
+      "type": [
+        "education"
+      ],
+      "tech": [
+        "HTML5",
+        "CSS3",
+        "Vanilla JS"
+      ],
+      "live": "https://beautyofethiopia.netlify.app/",
+      "github": "#",
+      "premium": false
+    },
+    {
+      "id": 5,
+      "file": "005",
+      "title": "Canopy Hotel & Resort",
+      "subtitle": "Corporate brochure + contact",
+      "desc": "Brand presence for a 4-star hotel a clean, responsive site with an integrated contact form and location showcase.",
+      "badge": "standard",
+      "type": [
+        "hotel"
+      ],
+      "tech": [
+        "HTML",
+        "CSS",
+        "Contact form"
+      ],
+      "live": "https://www.canopyhotelandresort.com/",
+      "github": "#",
+      "premium": false
+    },
+    {
+      "id": 6,
+      "file": "006",
+      "title": "Exam Portal (ODA)",
+      "subtitle": "Student & teacher grade hub",
+      "desc": "Role-based portal where students view results and teachers upload grades a clear academic workflow for ODA school.",
+      "badge": "standard",
+      "type": [
+        "education",
+        "portal"
+      ],
+      "tech": [
+        "HTML",
+        "CSS",
+        "Firebase",
+        "Auth"
+      ],
+      "live": "https://examportaloda.netlify.app/",
+      "github": "#",
+      "premium": false
+    },
+    {
+      "id": 7,
+      "file": "007",
+      "title": "Rosemary Admin",
+      "subtitle": "Hotel management dashboard",
+      "desc": "Secure backend for Rosemary Hotel manage bookings, inquiries, and testimonials, and view performance metrics in real time.",
+      "badge": "admin",
+      "type": [
+        "hotel",
+        "portal"
+      ],
+      "tech": [
+        "Dashboard",
+        "Firebase",
+        "Analytics"
+      ],
+      "live": "https://rosemaryadmin.netlify.app/",
+      "github": "#",
+      "premium": true
+    },
+    {
+      "id": 8,
+      "file": "008",
+      "title": "RAMODA · Brand",
+      "subtitle": "Identity placeholder",
+      "desc": "A minimal brand landing page clean and modern, ready for future expansion of the RAMODA identity.",
+      "badge": "basic",
+      "type": [
+        "education"
+      ],
+      "tech": [
+        "HTML",
+        "CSS"
+      ],
+      "live": "https://ramoda.netlify.app/",
+      "github": "#",
+      "premium": false
+    }
+  ]
+}
