@@ -207,7 +207,8 @@
 </div>
 
 <script>
-const API_BASE = 'http://localhost:5000/api/projects';
+// ✅ FIXED: Relative URL works both locally and on Render
+const API_BASE = '/api/projects';
 
 // DOM elements
 const form = document.getElementById('projectForm');
@@ -264,7 +265,7 @@ async function fetchProjects() {
     return projects;
   } catch (error) {
     console.error('Fetch error:', error);
-    tbody.innerHTML = `<tr class="empty-row"><td colspan="4">⚠️ Error loading projects. Make sure server is running on port 5000</td></tr>`;
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="4">⚠️ Error loading projects.</td></tr>`;
     showToast('Error: ' + error.message, true);
     return [];
   }
